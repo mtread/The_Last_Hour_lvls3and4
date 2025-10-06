@@ -1,0 +1,387 @@
+[gd_scene load_steps=20 format=3 uid="uid://ski55qrhkuey"]
+
+[ext_resource type="PackedScene" uid="uid://6o1tdt4uolqj" path="res://Scenes/protagonist_color.tscn" id="1_53xsp"]
+[ext_resource type="Script" uid="uid://c03strwpd2tiv" path="res://scripts/protagonist.gd" id="2_5e78q"]
+[ext_resource type="Texture2D" uid="uid://coy6q2ib0dywu" path="res://assets/art/JWDLx5AZBtI.jpg" id="3_l4wr6"]
+[ext_resource type="PackedScene" uid="uid://bgxlgqdv6y0ya" path="res://Scenes/level_portal.tscn" id="4_5e78q"]
+[ext_resource type="PackedScene" uid="uid://64dpjpb06hef" path="res://Scenes/killzone.tscn" id="4_5rvg2"]
+[ext_resource type="PackedScene" uid="uid://b8lnvq32renyf" path="res://Scenes/platform_1.tscn" id="5_jtv8s"]
+[ext_resource type="PackedScene" uid="uid://l3udkqom3myk" path="res://Scenes/platform_2.tscn" id="6_c81s1"]
+[ext_resource type="PackedScene" uid="uid://be56mgo3v1pjk" path="res://Scenes/platform_3.tscn" id="7_n4vm5"]
+[ext_resource type="Script" uid="uid://dxueijp2et7ox" path="res://Scenes/level_portal.gd" id="9_l4wr6"]
+[ext_resource type="PackedScene" uid="uid://b4molfs33flhj" path="res://Scenes/time_shard.tscn" id="11_fxnjf"]
+[ext_resource type="Script" uid="uid://5r1vuoara7v5" path="res://ui.gd" id="13_nbwsh"]
+[ext_resource type="Script" uid="uid://l18djeacmsp8" path="res://scripts/score.gd" id="14_kgmqw"]
+[ext_resource type="Script" uid="uid://ilkla3v46sfn" path="res://tutorial_message.gd" id="15_s80er"]
+[ext_resource type="FontFile" uid="uid://cfcdohwd23u8f" path="res://assets/Fonts/PixelOperator8.ttf" id="16_8jhox"]
+[ext_resource type="Script" uid="uid://npgtmxpqfq70" path="res://scripts/Fader.gd" id="17_hed5s"]
+[ext_resource type="PackedScene" uid="uid://bykmrf38l3vjp" path="res://Scenes/scroll_v2.tscn" id="18_kgmqw"]
+[ext_resource type="PackedScene" uid="uid://fxiknelu6hip" path="res://Scenes/ShadowTwin_lvl3.tscn" id="18_nbwsh"]
+[ext_resource type="Script" uid="uid://c473hcnvsfd2q" path="res://scripts/ThoughtBubble.gd" id="18_yykrm"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_fxnjf"]
+normal = Vector2(-0.0099995, -0.99995)
+distance = -76.0
+
+[node name="Level_3" type="Node2D"]
+
+[node name="UI" type="CanvasLayer" parent="." groups=["tutorial_popup"]]
+script = ExtResource("13_nbwsh")
+
+[node name="Score" type="Node" parent="UI"]
+unique_name_in_owner = true
+script = ExtResource("14_kgmqw")
+
+[node name="ScoreLabel" type="Label" parent="UI/Score"]
+offset_left = -232.0
+offset_top = -398.0
+offset_right = -43.0
+offset_bottom = -375.0
+text = "Time Shards Collected: 0"
+metadata/_edit_use_anchors_ = true
+
+[node name="HealthLabel" type="Label" parent="UI/Score"]
+offset_left = -226.0
+offset_top = -375.0
+offset_right = -84.0
+offset_bottom = -352.0
+text = "Health : 100"
+metadata/_edit_use_anchors_ = true
+
+[node name="TutorialLayer" type="Control" parent="UI"]
+visible = false
+z_index = 100
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dimmer" type="ColorRect" parent="UI/TutorialLayer"]
+layout_mode = 2
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0, 0, 0, 0.4)
+
+[node name="TutorialMessage" type="PanelContainer" parent="UI/TutorialLayer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("15_s80er")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/TutorialLayer/TutorialMessage"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="MessageLabel" type="Label" parent="UI/TutorialLayer/TutorialMessage/VBoxContainer"]
+layout_mode = 2
+text = "Time Shards add precious seconds to your countdown. Collect them to extend your remaining time!"
+vertical_alignment = 1
+
+[node name="OkButton" type="Button" parent="UI/TutorialLayer/TutorialMessage/VBoxContainer"]
+layout_mode = 2
+text = "Got it"
+
+[node name="TimeLabel" type="Label" parent="UI"]
+offset_left = 507.0
+offset_top = 18.0
+offset_right = 547.0
+offset_bottom = 42.0
+theme_override_fonts/font = ExtResource("16_8jhox")
+theme_override_font_sizes/font_size = 24
+
+[node name="FaderLayer" type="Control" parent="UI" groups=["fader", "player"]]
+visible = false
+z_index = 4096
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("17_hed5s")
+
+[node name="Fade" type="ColorRect" parent="UI/FaderLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 2.0
+offset_right = 5.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MsgPanel" type="PanelContainer" parent="UI/FaderLayer"]
+layout_mode = 0
+offset_left = 498.0
+offset_top = 158.0
+offset_right = 538.0
+offset_bottom = 198.0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/FaderLayer/MsgPanel"]
+layout_mode = 2
+
+[node name="MsgLabel" type="Label" parent="UI/FaderLayer/MsgPanel/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ThoughtBubble" type="Control" parent="UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("18_yykrm")
+
+[node name="BubblePanel" type="PanelContainer" parent="UI/ThoughtBubble"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/ThoughtBubble/BubblePanel"]
+layout_mode = 2
+
+[node name="BubbleLabel" type="Label" parent="UI/ThoughtBubble/BubblePanel/MarginContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Platforms" type="Node" parent="."]
+
+[node name="platform_1" parent="Platforms" instance=ExtResource("5_jtv8s")]
+position = Vector2(1745, -220)
+
+[node name="platform_30" parent="Platforms" instance=ExtResource("5_jtv8s")]
+position = Vector2(171, -517)
+
+[node name="platform_31" parent="Platforms" instance=ExtResource("5_jtv8s")]
+position = Vector2(3733, -96)
+
+[node name="platform_32" parent="Platforms" instance=ExtResource("5_jtv8s")]
+position = Vector2(1822, -1046)
+
+[node name="platform_33" parent="Platforms" instance=ExtResource("5_jtv8s")]
+position = Vector2(2946, -1033)
+
+[node name="platform_29" parent="Platforms" instance=ExtResource("6_c81s1")]
+position = Vector2(3924, -646)
+
+[node name="platform_29" parent="Platforms/platform_29" instance=ExtResource("6_c81s1")]
+position = Vector2(692, -82)
+
+[node name="platform_28" parent="Platforms/platform_29" instance=ExtResource("7_n4vm5")]
+position = Vector2(521, -82)
+
+[node name="platform_42" parent="Platforms/platform_29" instance=ExtResource("7_n4vm5")]
+position = Vector2(868, -87)
+
+[node name="platform_43" parent="Platforms/platform_29" instance=ExtResource("6_c81s1")]
+position = Vector2(1045, -84)
+
+[node name="platform_28" parent="Platforms" instance=ExtResource("7_n4vm5")]
+position = Vector2(3753, -646)
+
+[node name="platform_27" parent="Platforms" instance=ExtResource("7_n4vm5")]
+position = Vector2(3602, -504)
+
+[node name="platform_26" parent="Platforms" instance=ExtResource("7_n4vm5")]
+position = Vector2(3446, -389)
+
+[node name="platform_25" parent="Platforms" instance=ExtResource("7_n4vm5")]
+position = Vector2(3080, -264)
+
+[node name="platform_24" parent="Platforms" instance=ExtResource("6_c81s1")]
+position = Vector2(2666, -309)
+
+[node name="platform_23" parent="Platforms" instance=ExtResource("7_n4vm5")]
+position = Vector2(2517, -224)
+
+[node name="platform_22" parent="Platforms" instance=ExtResource("6_c81s1")]
+position = Vector2(2347, -224)
+
+[node name="platform_21" parent="Platforms" instance=ExtResource("7_n4vm5")]
+position = Vector2(1991, -309)
+
+[node name="platform_20" parent="Platforms" instance=ExtResource("6_c81s1")]
+position = Vector2(1817, -395)
+
+[node name="platform_19" parent="Platforms" instance=ExtResource("6_c81s1")]
+position = Vector2(1648, -393)
+
+[node name="platform_18" parent="Platforms" instance=ExtResource("6_c81s1")]
+position = Vector2(1478, -395)
+
+[node name="platform_17" parent="Platforms" instance=ExtResource("7_n4vm5")]
+position = Vector2(-723, -834)
+
+[node name="platform_16" parent="Platforms" instance=ExtResource("7_n4vm5")]
+position = Vector2(-550, -833)
+
+[node name="platform_15" parent="Platforms" instance=ExtResource("7_n4vm5")]
+position = Vector2(-133, -969)
+
+[node name="platform_14" parent="Platforms" instance=ExtResource("6_c81s1")]
+position = Vector2(225, -885)
+
+[node name="platform_13" parent="Platforms" instance=ExtResource("6_c81s1")]
+position = Vector2(396, -887)
+
+[node name="platform_12" parent="Platforms" instance=ExtResource("6_c81s1")]
+position = Vector2(567, -887)
+
+[node name="platform_11" parent="Platforms" instance=ExtResource("6_c81s1")]
+position = Vector2(733, -887)
+
+[node name="platform_10" parent="Platforms" instance=ExtResource("6_c81s1")]
+position = Vector2(1067, -291)
+
+[node name="platform_10" parent="Platforms/platform_10" instance=ExtResource("6_c81s1")]
+position = Vector2(-167, -151)
+
+[node name="platform_45" parent="Platforms/platform_10" instance=ExtResource("6_c81s1")]
+position = Vector2(6, -153)
+
+[node name="platform_11" parent="Platforms/platform_10" instance=ExtResource("6_c81s1")]
+position = Vector2(43, -307)
+
+[node name="platform_10" parent="Platforms/platform_10/platform_11" instance=ExtResource("6_c81s1")]
+position = Vector2(-167, -155)
+
+[node name="platform_45" parent="Platforms/platform_10/platform_11" instance=ExtResource("6_c81s1")]
+position = Vector2(6, -157)
+
+[node name="platform_46" parent="Platforms/platform_10" instance=ExtResource("6_c81s1")]
+position = Vector2(216, -309)
+
+[node name="platform_9" parent="Platforms" instance=ExtResource("7_n4vm5")]
+position = Vector2(1106, -147)
+
+[node name="platform_8" parent="Platforms" instance=ExtResource("7_n4vm5")]
+position = Vector2(933, -147)
+
+[node name="platform_7" parent="Platforms" instance=ExtResource("6_c81s1")]
+position = Vector2(761, -64)
+
+[node name="platform_6" parent="Platforms" instance=ExtResource("6_c81s1")]
+position = Vector2(591, -64)
+
+[node name="platform_5" parent="Platforms" instance=ExtResource("7_n4vm5")]
+position = Vector2(421, 22)
+
+[node name="platform_4" parent="Platforms" instance=ExtResource("7_n4vm5")]
+position = Vector2(248, 105)
+
+[node name="platform_3" parent="Platforms" instance=ExtResource("7_n4vm5")]
+position = Vector2(-97, 105)
+
+[node name="platform_2" parent="Platforms" instance=ExtResource("6_c81s1")]
+position = Vector2(74, 105)
+
+[node name="platform_34" parent="Platforms" instance=ExtResource("7_n4vm5")]
+position = Vector2(-440, 102)
+
+[node name="platform_35" parent="Platforms" instance=ExtResource("6_c81s1")]
+position = Vector2(-267, 104)
+
+[node name="platform_36" parent="Platforms" instance=ExtResource("6_c81s1")]
+position = Vector2(-626, -69)
+
+[node name="platform_37" parent="Platforms" instance=ExtResource("7_n4vm5")]
+position = Vector2(-614, 22)
+
+[node name="platform_38" parent="Platforms" instance=ExtResource("7_n4vm5")]
+position = Vector2(-893, -831)
+
+[node name="platform_39" parent="Platforms" instance=ExtResource("7_n4vm5")]
+position = Vector2(-1066, -831)
+
+[node name="platform_40" parent="Platforms" instance=ExtResource("6_c81s1")]
+position = Vector2(49, -887)
+
+[node name="platform_41" parent="Platforms" instance=ExtResource("6_c81s1")]
+position = Vector2(2162, -310)
+
+[node name="platform_42" parent="Platforms" instance=ExtResource("7_n4vm5")]
+position = Vector2(4100, -651)
+
+[node name="platform_43" parent="Platforms" instance=ExtResource("6_c81s1")]
+position = Vector2(4277, -648)
+
+[node name="platform_44" parent="Platforms" instance=ExtResource("7_n4vm5")]
+position = Vector2(-300, -968)
+
+[node name="platform_45" parent="Platforms" instance=ExtResource("6_c81s1")]
+position = Vector2(1240, -293)
+
+[node name="platform_46" parent="Platforms" instance=ExtResource("6_c81s1")]
+position = Vector2(2836, -310)
+
+[node name="platform_47" parent="Platforms" instance=ExtResource("7_n4vm5")]
+position = Vector2(3256, -265)
+
+[node name="Killzone" parent="." instance=ExtResource("4_5rvg2")]
+position = Vector2(1467, -348)
+scale = Vector2(10, 10)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
+position = Vector2(-1, 4)
+shape = SubResource("WorldBoundaryShape2D_fxnjf")
+
+[node name="protagonist" parent="." groups=["player"] instance=ExtResource("1_53xsp")]
+visibility_layer = 3
+position = Vector2(100, 3)
+script = ExtResource("2_5e78q")
+
+[node name="Camera2D" type="Camera2D" parent="protagonist"]
+position = Vector2(252, -142)
+zoom = Vector2(0.9, 0.9)
+
+[node name="BG" type="TextureRect" parent="protagonist/Camera2D"]
+light_mask = 2
+z_index = -100
+offset_left = -640.0
+offset_top = -358.0
+offset_right = 640.0
+offset_bottom = 362.0
+texture = ExtResource("3_l4wr6")
+
+[node name="LevelPortal" parent="." instance=ExtResource("4_5e78q")]
+position = Vector2(4919, -822)
+scale = Vector2(5.59998, 6.4)
+script = ExtResource("9_l4wr6")
+
+[node name="TimeShards" type="Node" parent="."]
+
+[node name="Time_Shard2" parent="TimeShards" instance=ExtResource("11_fxnjf")]
+position = Vector2(1465, -540)
+
+[node name="Time_Shard3" parent="TimeShards" instance=ExtResource("11_fxnjf")]
+position = Vector2(3453, -534)
+
+[node name="Time_Shard4" parent="TimeShards" instance=ExtResource("11_fxnjf")]
+position = Vector2(-1073, -979)
+
+[node name="ShadowTwin" parent="." instance=ExtResource("18_nbwsh")]
+position = Vector2(2345, -319)
+
+[node name="Node2D" parent="." instance=ExtResource("18_kgmqw")]
+position = Vector2(4188, -801)
